@@ -2,10 +2,10 @@
 @*Define ViewData*@
 @*Write code*@
 
-@model IEnumerable<Actor>
+@model IEnumerable<Producer>
 
 @{
-    ViewData["Title"] = "List of Actors";
+    ViewData["Title"] = "List of Producers";
 }
 
 <div class="row">
@@ -20,17 +20,17 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var actor in Model)
+                @foreach (var producer in Model)
                 {
                     <tr>
                         <td class="align-middle">
-                            <img class="rounded-circle" src="@actor.ProfilePictureURL" alt="@actor.FullName" style="max-width:150px" />
+                            <img class="rounded-circle" src="@producer.ProfilePictureURL" alt="@producer.FullName" style="max-width:150px" />
                         </td>
                         <td class="align-middle">
-                            @Html.DisplayFor(model => actor.FullName)
+                            @Html.DisplayFor(model => producer.FullName)
                         </td>
                         <td class="align-middle">
-                            @Html.DisplayFor(model => actor.Bio)
+                            @Html.DisplayFor(model => producer.Bio)
                         </td>
                         <td class="align-middle">
                             <a class="btn btn-outline-primary"><i class="bi bi-pencil-square"></i>Edit</a>
