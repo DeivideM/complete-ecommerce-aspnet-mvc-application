@@ -1,0 +1,85 @@
+﻿@*Define model*@
+@*Define ViewData*@
+@*Write code*@
+
+@model Actor
+
+@{
+    ViewData["Title"] = "Create a new Actor";
+}
+
+<div class="row text">
+    <div class="col-md-8 offset-md-2">
+        <p>
+            <h1>Add a new Actor</h1>
+        </p>
+        <div class="row">
+            <div class="col-md-8 offset-2">
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <!-- Pré-visualização da imagem -->
+                    <div class="form-group text-center">
+                        <img id="ProfilePicturePreview" />
+                        @* <img id="ProfilePicturePreview" src="" alt="Profile Picture Preview" class="rounded-preview mt-2"> *@
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="ProfilePictureURL" class="control-label"></label>
+                        <input asp-for="ProfilePictureURL" class="form-control" />
+                        <span asp-validation-for="ProfilePictureURL" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="FullName" class="control-label"></label>
+                        <input asp-for="FullName" class="form-control" />
+                        <span asp-validation-for="FullName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Bio" class="control-label"></label>
+                        <input asp-for="Bio" class="form-control" />
+                        <span asp-validation-for="Bio" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group d-flex justify-content-between mt-3">
+                        <a class="btn btn-outline-secondary" asp-action="Index">Show All</a>
+                        <input type="submit" value="Create" class="btn btn-outline-success" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+
+        $(document).ready(function() {
+            // Set initial preview image if ProfilePictureURL has a value
+            var initialUrl = $("#ProfilePictureURL").val();
+            if (initialUrl) {
+                $("#ProfilePicturePreview").attr("src", initialUrl);
+                $("#ProfilePicturePreview").css({
+                    "max-width": "200px",
+                    "max-height": "200px",
+                    "border-radius": "50%",   // <-- deixa a imagem circular
+                    "object-fit": "cover",    // <-- mantém a proporção dentro do círculo
+                    "border": "2px solid #ccc" // opcional: borda ao redor
+                });
+            }
+        })
+
+        // JavaScript to preview the profile picture after change
+        $("#ProfilePictureURL").on("change", function()
+        {
+            var url = $(this).val();
+            $("#ProfilePicturePreview").attr("src", url);
+            $("#ProfilePicturePreview").css({
+                "max-width": "200px",
+                "max-height": "200px",
+                "border-radius": "50%",   // <-- deixa a imagem circular
+                "object-fit": "cover",    // <-- mantém a proporção dentro do círculo
+                "border": "2px solid #ccc" // opcional: borda ao redor
+            });
+        });
+    </script>
+}
