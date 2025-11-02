@@ -58,8 +58,14 @@ public class ProducersController : Controller
         {
             return View(producer);
         }
-        await _service.UpdateAsync(id, producer);
-        return RedirectToAction(nameof(Index));
+
+        if(id == producer.Id)
+        {
+            await _service.UpdateAsync(id, producer);
+            return RedirectToAction(nameof(Index));
+        }
+        return View(producer);
+
     }
 
     public async Task<IActionResult> Delete(int id)

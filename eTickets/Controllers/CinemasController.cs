@@ -22,7 +22,7 @@ public class CinemasController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create([Bind("FullName,Bio,ProfilePictureURL")] Cinema cinema)
+    public async Task<IActionResult> Create([Bind("Name,Description,Logo")] Cinema cinema)
     {
         if (!ModelState.IsValid)
         {

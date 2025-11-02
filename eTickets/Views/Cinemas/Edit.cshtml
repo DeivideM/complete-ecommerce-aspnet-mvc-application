@@ -55,7 +55,7 @@
 
         $(document).ready(function() {
             // Set initial preview image if ProfilePictureURL has a value
-            var initialUrl = $("#ProfilePictureURL").val();
+            var initialUrl = $("#Logo").val();
             if (initialUrl) {
                 $("#ProfilePicturePreview").attr("src", initialUrl);
                 $("#ProfilePicturePreview").css({
@@ -69,7 +69,7 @@
         })
 
         // JavaScript to preview the profile picture after change
-        $("#ProfilePictureURL").on("change", function()
+        $("#Logo").on("change", function()
         {
             var url = $(this).val();
             $("#ProfilePicturePreview").attr("src", url);
