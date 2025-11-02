@@ -7,9 +7,16 @@ namespace eTickets.Models
     {
         [Key]
         public int Id { get; set; }
+        [Display(Name = "Logo")]
+        [Required(ErrorMessage = "Logo is required")]
         public string Logo { get; set; } = string.Empty;
+
         [Display(Name = "Cinema")]
+        [Required(ErrorMessage = "Name is required")]
+        [StringLength(150, MinimumLength = 3, ErrorMessage = "Name must be between 3 and 150 characters")]
         public string Name { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Description is required")]
         public string Description { get; set; } = string.Empty;
 
         //Relationships

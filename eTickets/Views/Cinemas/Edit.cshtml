@@ -20,8 +20,8 @@
 
                     <!-- Pré-visualização da imagem -->
                     <div class="form-group text-center">
-                        <img id="ProfilePicturePreview" />
-                        @* <img id="ProfilePicturePreview" src="" alt="Profile Picture Preview" class="rounded-preview mt-2"> *@
+                        @* <img id="ProfilePicturePreview" /> *@
+                        <img id="ProfilePicturePreview" class="border-info rounded-circle" style="max-width: 150px "/>
                     </div>
 
                     <div class="form-group">
@@ -54,32 +54,16 @@
     <script>
 
         $(document).ready(function() {
-            // Set initial preview image if ProfilePictureURL has a value
-            var initialUrl = $("#Logo").val();
-            if (initialUrl) {
-                $("#ProfilePicturePreview").attr("src", initialUrl);
-                $("#ProfilePicturePreview").css({
-                    "max-width": "200px",
-                    "max-height": "200px",
-                    "border-radius": "50%",   // <-- deixa a imagem circular
-                    "object-fit": "cover",    // <-- mantém a proporção dentro do círculo
-                    "border": "2px solid #ccc" // opcional: borda ao redor
-                });
-            }
+            var output = document.getElementById('ProfilePicturePreview');
+            output.src = $("#Logo").val();
+               
         })
 
         // JavaScript to preview the profile picture after change
         $("#Logo").on("change", function()
         {
-            var url = $(this).val();
-            $("#ProfilePicturePreview").attr("src", url);
-            $("#ProfilePicturePreview").css({
-                "max-width": "200px",
-                "max-height": "200px",
-                "border-radius": "50%",   // <-- deixa a imagem circular
-                "object-fit": "cover",    // <-- mantém a proporção dentro do círculo
-                "border": "2px solid #ccc" // opcional: borda ao redor
-            });
+            var output = document.getElementById('ProfilePicturePreview');
+            output.src = $(this).val();
         });
     </script>
 }
