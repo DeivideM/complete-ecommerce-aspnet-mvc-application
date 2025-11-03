@@ -1,0 +1,52 @@
+﻿@using eTickets.Data.ViewModels
+@model ShoppingCartViewModel
+
+@{
+    ViewData["Title"] = "Your Shopping Cart";
+}
+
+<div class="row">
+    <div class="col-md-8-offset-2">
+        <h2>Your Shopping Cart</h2>
+        @if (Model.ShoppingCart.ShoppingCartItems != null && Model.ShoppingCart.ShoppingCartItems.Any())
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Selected amount</th>
+                        <th>Movie</th>
+                        <th>Price</th>
+                        <th>SubTotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.ShoppingCart.ShoppingCartItems)
+                    {
+                        <tr>
+                            <td>@item.Amount</td>
+                            <td>@item.Movie.Name</td>
+                            <td>@item.Movie.Price.ToString("C")</td>
+                            <td>@(item.Amount* item.Movie.Price).ToString("C")</td>
+                            <td class="align-middle">
+                                <a class="text-danger" asp-controller="Orders" asp-action="RemoveItemFromShoppingCart" asp-route-id="@item.Movie.Id">
+                                    <i class="bi bi-cart-dash"></i>
+                                </a>
+                                |
+                                <a class="text-success" asp-controller="Orders" asp-action="AddItemFromShoppingCart" asp-route-id="@item.Movie.Id">
+                                    <i class="bi bi-cart-plus"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <h3>Total Amount: @Model.ShoppingCartTotal.ToString("C")</h3>
+            <a asp-controller="Orders" asp-action="Checkout" class="btn btn-primary">Proceed to Checkout</a>
+        }
+        else
+        {
+            <p>Your shopping cart is empty.</p>
+            <a asp-controller="Movies" asp-action="Index" class="btn btn-secondary">Browse Movies</a>
+        }
+    </div>
+</div>
