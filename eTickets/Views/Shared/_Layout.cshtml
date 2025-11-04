@@ -59,6 +59,11 @@
                             <i class="bi bi-search"></i>
                         </button>
                     </form>
+
+                    <div class="d-flex align-items-center" style="padding-right: 25px;">
+                        @await Component.InvokeAsync("ShoppingCartSummary")
+                    </div>
+
                 </div>
             </div>
         </nav>

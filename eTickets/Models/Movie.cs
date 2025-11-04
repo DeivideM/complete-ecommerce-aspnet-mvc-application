@@ -2,6 +2,7 @@
 using eTickets.Data.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Resources;
 
 namespace eTickets.Models
 {
@@ -13,8 +14,16 @@ namespace eTickets.Models
         public string Name { get; set; } = string.Empty;
         [Required(ErrorMessage = "Description is required")]
         public string Description { get; set; } = string.Empty;
-        [Required(ErrorMessage = "Price is required")]
+
+        //[Required(ErrorMessage = "Price is required")]
+        [Required(ErrorMessageResourceType = typeof(Resources.ValidationMessages),
+              ErrorMessageResourceName = "Required")]
+        [Display(Name = "Price")]
+        [Range(0.01, double.MaxValue,
+           ErrorMessageResourceType = typeof(Resources.ValidationMessages),
+           ErrorMessageResourceName = "PriceGreaterThanZero")]
         public double Price { get; set; }
+
         [Required(ErrorMessage = "Logo is required")]
         public string ImageURL { get; set; } = string.Empty;
         public DateTime StartDate { get; set; }

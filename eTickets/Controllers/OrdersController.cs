@@ -9,11 +9,13 @@ namespace eTickets.Controllers
     {
         private readonly IMoviesService _moviesService;
         private readonly ShoppingCart _shoppingCart;
+        private readonly IOrdersService _ordersService;
 
-        public OrdersController(IMoviesService moviesService, ShoppingCart shoppingCart)
+        public OrdersController(IMoviesService moviesService, ShoppingCart shoppingCart, IOrdersService ordersService)
         {
             _moviesService = moviesService;
             _shoppingCart = shoppingCart;
+            _ordersService = ordersService;
         }
         public IActionResult ShoppingCart()
         {
@@ -27,6 +29,44 @@ namespace eTickets.Controllers
                 ShoppingCartTotal = _shoppingCart.GetShoppingCartTotal()
             };
             return View(response);
+        }
+
+        public async Task<IActionResult> AddToShoppingCart(int id)
+        {
+            var item = await _moviesService.GetMovieByIdAsync(id);
+            if (item != null)
+            {
+                _shoppingCart.AddItemToCart(item);
+            }
+            return RedirectToAction(nameof(ShoppingCart));
+        }
+
+        public async Task<IActionResult> RemoveItemFromShoppingCart(int id)
+        {
+            var item = await _moviesService.GetMovieByIdAsync(id);
+            if (item != null)
+            {
+                _shoppingCart.RemoveItemFromCart(item);
+            }
+            return RedirectToAction(nameof(ShoppingCart));
+        }
+
+        public async Task<IActionResult> ClearShoppingCart()
+        {
+            await _shoppingCart.ClearShoppingCartAsync();
+            return RedirectToAction(nameof(ShoppingCart));
+        }
+
+        public async Task<IActionResult> Checkout()
+        {
+            var items = _shoppingCart.GetShoppingCartItems();
+            string userId = ""; //TO DO: Get user id
+            string userEmailAddress = ""; //TO DO: Get user email
+            _shoppingCart.ShoppingCartItems = items;
+            await _ordersService.StoreOrderAsync(items, userId, userEmailAddress);
+            await _shoppingCart.ClearShoppingCartAsync();
+
+            return View("OrderCompleted");
         }
     }
 }

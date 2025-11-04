@@ -26,13 +26,13 @@
                             <td>@item.Amount</td>
                             <td>@item.Movie.Name</td>
                             <td>@item.Movie.Price.ToString("C")</td>
-                            <td>@(item.Amount* item.Movie.Price).ToString("C")</td>
+                            <td>@((item.Amount * item.Movie.Price).ToString("C"))</td>
                             <td class="align-middle">
                                 <a class="text-danger" asp-controller="Orders" asp-action="RemoveItemFromShoppingCart" asp-route-id="@item.Movie.Id">
                                     <i class="bi bi-cart-dash"></i>
                                 </a>
                                 |
-                                <a class="text-success" asp-controller="Orders" asp-action="AddItemFromShoppingCart" asp-route-id="@item.Movie.Id">
+                                <a class="text-success" asp-controller="Orders" asp-action="AddToShoppingCart" asp-route-id="@item.Movie.Id">
                                     <i class="bi bi-cart-plus"></i>
                                 </a>
                             </td>
@@ -41,7 +41,10 @@
                 </tbody>
             </table>
             <h3>Total Amount: @Model.ShoppingCartTotal.ToString("C")</h3>
-            <a asp-controller="Orders" asp-action="Checkout" class="btn btn-primary">Proceed to Checkout</a>
+            <div class="d-flex justify-content-center gap-2 mt-3">
+                <a asp-controller="Movies" asp-action="Index" class="btn btn-secondary">Add more items</a>
+                <a asp-controller="Orders" asp-action="Checkout" class="btn btn-primary">Proceed to Checkout</a>
+            </div>
         }
         else
         {
