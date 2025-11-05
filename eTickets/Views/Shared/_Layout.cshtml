@@ -4,81 +4,148 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - eTickets</title>
+
+    <!-- Bootstrap & Icons -->
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
+    <!-- Custom Styles -->
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/eTickets.styles.css" asp-append-version="true" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+    @* <style>
+        
+    </style> *@
 </head>
+
 <body>
+    <!-- HEADER -->
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Movies" asp-action="Index">eTickets</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+        <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm sticky-top">
+            <div class="container-fluid px-4">
+
+                <!-- Brand -->
+                <a class="navbar-brand d-flex align-items-center" asp-controller="Movies" asp-action="Index">
+                    <i class="bi bi-ticket-perforated-fill me-2 fs-4 text-primary"></i>
+                    eTickets
+                </a>
+
+                <!-- Toggle Button -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
+                        aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="navbar-nav flex-grow-1">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Movies" asp-action="Index"><i class="badge-info bi-film"></i> Movies</a>
-                        </li>
 
-
+                <!-- Navbar Links -->
+                <div class="collapse navbar-collapse" id="mainNavbar">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         @* <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Actors" asp-action="Index">Actors</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Producers" asp-action="Index">Producers</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Cinemas" asp-action="Index">Cinemas</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Movies" asp-action="Index"><i class="badge-info bi-film"></i> Movies</a>
+                            <a class="nav-link" asp-controller="Movies" asp-action="Index">
+                                <i class="bi bi-film me-1"></i> Movies
+                            </a>
                         </li> *@
 
+                        <!-- Management Dropdown -->
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="bi bi-gear"></i> Management
                             </a>
-
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                @* <a class="dropdown-item" asp-area="Admin" asp-controller="Actors" asp-action="Index">Manage Actors</a> *@
-                                <li><a class="dropdown-item" asp-controller="Actors" asp-action="Index"><i class="bi bi-person-square"></i> Actors</a></li>
-                                <li><a class="dropdown-item" asp-controller="Producers" asp-action="Index"><i class="bi bi-headset"></i> Producers</a></li>
-                                <li><a class="dropdown-item" asp-controller="Cinemas" asp-action="Index"><i class="bi bi-camera-reels"></i> Cinemas</a></li>
+                            <ul class="dropdown-menu shadow border-0 rounded-3" aria-labelledby="navbarDropdown">
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center gap-2" asp-controller="Actors" asp-action="Index">
+                                        <i class="bi bi-person-square text-primary"></i> Actors
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center gap-2" asp-controller="Producers" asp-action="Index">
+                                        <i class="bi bi-headset text-success"></i> Producers
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center gap-2" asp-controller="Cinemas" asp-action="Index">
+                                        <i class="bi bi-camera-reels text-info"></i> Cinemas
+                                    </a>
+                                </li>
                             </ul>
                         </li>
                     </ul>
 
-                    <form class="d-flex" style="padding-right: 25px;" asp-controller="Movies" asp-action="Filter">
+                    <!-- Search Bar -->
+                    <form class="d-flex search-bar me-3" asp-controller="Movies" asp-action="Filter">
                         <input name="searchString" type="text" class="form-control me-2" placeholder="Search for a movie...">
-                        <button class="btn btn-outline-success" type="submit">
+                        <button class="btn btn-outline-primary" type="submit">
                             <i class="bi bi-search"></i>
                         </button>
                     </form>
 
-                    <div class="d-flex align-items-center" style="padding-right: 25px;">
+                    <!-- Shopping Cart -->
+                    <div class="cart-summary">
                         @await Component.InvokeAsync("ShoppingCartSummary")
                     </div>
 
+                    <!-- Profile Dropdown -->
+                    <div class="dropdown">
+                        <a class="btn btn-outline-primary dropdown-toggle d-flex align-items-center gap-2 px-3 py-2 rounded-pill"
+                           href="#" id="profile-btn" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-person-circle fs-5"></i>
+                            <span class="fw-semibold">Profile</span>
+                        </a>
+
+                        <ul class="dropdown-menu dropdown-menu-end shadow border-0 rounded-3 mt-2 py-2"
+                            aria-labelledby="profile-btn" style="min-width: 220px;">
+                            <li>
+                                <h6 class="dropdown-header text-muted fw-semibold">
+                                    <i class="bi bi-person-badge me-2"></i>Account
+                                </h6>
+                            </li>
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center gap-2 py-2" asp-controller="Orders" asp-action="Index">
+                                    <i class="bi bi-list text-primary"></i> Orders
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center gap-2 py-2" asp-controller="Account" asp-action="Login">
+                                    <i class="bi bi-box-arrow-in-right text-success"></i> Login
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center gap-2 py-2" asp-controller="Account" asp-action="Register">
+                                    <i class="bi bi-person-plus text-info"></i> Register
+                                </a>
+                            </li>
+
+                            <li><hr class="dropdown-divider my-2"></li>
+
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center gap-2 py-2 text-danger" asp-controller="Account" asp-action="Logout">
+                                    <i class="bi bi-box-arrow-right"></i> Logout
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container-fluid">
+
+    <!-- MAIN -->
+    <div class="container my-4">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - eTickets
+    <!-- FOOTER -->
+    <footer class="border-top text-muted mt-auto">
+        <div class="container text-center">
+            &copy; 2025 - <strong>eTickets</strong> 🎟️ &nbsp;|&nbsp;
+            <a asp-controller="Movies" asp-action="Index" class="text-decoration-none text-primary">Home</a>
         </div>
     </footer>
+
+    <!-- Scripts -->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

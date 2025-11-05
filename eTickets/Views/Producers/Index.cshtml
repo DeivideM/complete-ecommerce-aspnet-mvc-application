@@ -1,54 +1,98 @@
-﻿@*Define model*@
-@*Define ViewData*@
-@*Write code*@
-
-@model IEnumerable<Producer>
+﻿@model IEnumerable<Producer>
 
 @{
     ViewData["Title"] = "List of Producers";
 }
 
-<div class="row">
-    <div class="col-md-8 offset-md-2">
-        <table class="table">
-            <thead>
-                <tr class="text-center">
-                    <th>@Html.DisplayNameFor(model => model.ProfilePictureURL)</th>
-                    <th>@Html.DisplayNameFor(model => model.FullName)</th>
-                    <th>@Html.DisplayNameFor(model => model.Bio)</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var producer in Model)
-                {
+<div class="container mt-5">
+    <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center rounded-top-4">
+            <h3 class="mb-0"><i class="bi bi-person-video3 me-2"></i>@ViewData["Title"]</h3>
+            <a asp-action="Create" asp-controller="Producers" class="btn btn-light btn-sm fw-bold">
+                <i class="bi bi-plus-circle me-1"></i> Add New
+            </a>
+        </div>
+        <div class="card-body">
+            <table class="table table-hover align-middle text-center">
+                <thead class="table-light">
                     <tr>
-                        <td class="align-middle">
-                            <img class="rounded-circle" src="@producer.ProfilePictureURL" alt="@producer.FullName" style="max-width:150px" />
-                        </td>
-                        <td class="align-middle">
-                            @Html.DisplayFor(model => producer.FullName)
-                        </td>
-                        <td class="align-middle">
-                            @Html.DisplayFor(model => producer.Bio)
-                        </td>
-                        <td class="align-middle">
-                            @* <a class="btn btn-outline-primary"><i class="bi bi-pencil-square"></i>Edit</a> *@
-                            @* <a class="btn btn-outline-info"><i class="bi bi-eye"></i>Details</a> *@
-                            @* <a class="btn btn-danger"><i class="bi bi-trash"></i>Delete</a> *@
-                            <a asp-action="Edit" asp-controller="Producers" asp-route-id="@producer.Id" class="btn btn-primary"><i class="bi bi-pencil-square"></i>Edit</a>
-                            <a asp-action="Details" asp-controller="Producers" asp-route-id="@producer.Id" class="btn btn-info"><i class="bi bi-eye"></i>Details</a>
-                            <a asp-action="Delete" asp-controller="Producers" asp-route-id="@producer.Id" class="btn btn-danger"><i class="bi bi-trash"></i>Delete</a>
-                        </td>
+                        <th>@Html.DisplayNameFor(model => model.ProfilePictureURL)</th>
+                        <th>@Html.DisplayNameFor(model => model.FullName)</th>
+                        <th>@Html.DisplayNameFor(model => model.Bio)</th>
+                        <th>Actions</th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach (var producer in Model)
+                    {
+                        <tr class="table-row">
+                            <td>
+                                <img class="rounded-circle shadow-sm" src="@producer.ProfilePictureURL" alt="@producer.FullName"
+                                     style="width:80px; height:80px; object-fit:cover;" />
+                            </td>
+                            <td>@producer.FullName</td>
+                            <td class="text-muted text-truncate" style="max-width: 300px;">@producer.Bio</td>
+                            <td>
+                                <div class="btn-group" role="group">
+                                    <a asp-action="Edit" asp-controller="Producers" asp-route-id="@producer.Id" class="btn btn-outline-primary btn-sm" title="Edit">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+                                    <a asp-action="Details" asp-controller="Producers" asp-route-id="@producer.Id" class="btn btn-outline-info btn-sm" title="Details">
+                                        <i class="bi bi-eye"></i>
+                                    </a>
+                                    <a asp-action="Delete" asp-controller="Producers" asp-route-id="@producer.Id" class="btn btn-outline-danger btn-sm" title="Delete">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
-@* <div style="position: fixed; right: 25px; bottom:75px;" class="text-white">
-    <a class="btn btn-success" asp-controller="Producers" asp-action="Create"><i class="bi bi-plus-circle"></i> Add New</a>
-</div> *@
+@* <style>
+    .table-row:hover {
+        background-color: #f9f9f9;
+        transform: scale(1.01);
+        transition: all 0.2s ease-in-out;
+    }
 
-@await Html.PartialAsync("_CreateItem", "Producers")
+    .card {
+        border-radius: 20px;
+    }
+
+    .floating-add-btn {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        z-index: 999;
+    }
+
+        .floating-add-btn .btn {
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.25);
+            transition: all 0.3s;
+        }
+
+            .floating-add-btn .btn:hover {
+                transform: scale(1.1);
+            }
+</style> *@
+
+@* Optional floating button instead of header one *@
+@* 
+<div class="floating-add-btn">
+    <a asp-controller="Producers" asp-action="Create" class="btn btn-success">
+        <i class="bi bi-plus-lg"></i>
+    </a>
+</div>
+*@

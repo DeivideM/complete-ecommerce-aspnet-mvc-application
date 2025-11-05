@@ -1,0 +1,72 @@
+﻿@model List<Order>
+
+@{
+    ViewData["Title"] = "My Orders";
+}
+
+<div class="container my-5">
+    <div class="text-center mb-5">
+        <h2 class="fw-bold text-primary">
+            <i class="bi bi-bag-check me-2"></i> My Orders
+        </h2>
+        <p class="text-muted">Here’s a summary of all your past purchases.</p>
+    </div>
+
+    @if (Model != null && Model.Count > 0)
+    {
+        @foreach (var order in Model)
+        {
+            <div class="card shadow-sm mb-4 border-0 rounded-3">
+                <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                    <div>
+                        <span class="fw-bold">Order #@order.Id</span>
+                        <span class="badge bg-success ms-2">Completed</span>
+                    </div>
+                    <small class="text-muted">
+                        @DateTime.Now.ToString("dd MMM yyyy") @* replace with order.OrderDate if available *@
+                    </small>
+                </div>
+
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        @foreach (var item in order.OrderItems)
+                        {
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    <strong>@item.Movie.Name</strong>
+                                    <div class="text-muted small">Quantity: @item.Quantity</div>
+                                </div>
+                                <span class="fw-semibold">@item.Price.ToString("c")</span>
+                            </li>
+                        }
+                    </ul>
+
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <span class="fw-bold fs-5">
+                            Total:
+                            <span class="text-success">
+                                @order.OrderItems.Select(m => m.Movie.Price * m.Quantity).Sum().ToString("c")
+                            </span>
+                        </span>
+
+                        <a href="@Url.Action("Details", "Orders", new { id = order.Id })"
+                           class="btn btn-outline-primary btn-sm">
+                            <i class="bi bi-eye me-1"></i> View Details
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="alert alert-info text-center p-4 rounded-3 shadow-sm">
+            <i class="bi bi-emoji-smile fs-3 d-block mb-2"></i>
+            <h5 class="fw-bold">You have no orders yet</h5>
+            <p class="text-muted mb-3">Start exploring and add something to your cart!</p>
+            <a href="@Url.Action("Index", "Movies")" class="btn btn-primary">
+                <i class="bi bi-house-door me-2"></i> Browse Movies
+            </a>
+        </div>
+    }
+</div>

@@ -1,54 +1,64 @@
-﻿@*Define model*@
-@*Define ViewData*@
-@*Write code*@
-
-@model IEnumerable<Actor>
+﻿@model IEnumerable<Actor>
 
 @{
     ViewData["Title"] = "List of Actors";
 }
 
-<div class="row">
-    <div class="col-md-8 offset-md-2">
-        <table class="table">
-            <thead>
-                <tr class="text-center">
-                    <th>@Html.DisplayNameFor(model => model.ProfilePictureURL)</th>
-                    <th>@Html.DisplayNameFor(model => model.FullName)</th>
-                    <th>@Html.DisplayNameFor(model => model.Bio)</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var actor in Model)
-                {
+<div class="container mt-5">
+    <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center rounded-top-4">
+            <h3 class="mb-0"><i class="bi bi-people-fill me-2"></i>@ViewData["Title"]</h3>
+            <a asp-action="Create" asp-controller="Actors" class="btn btn-light btn-sm fw-bold">
+                <i class="bi bi-plus-circle me-1"></i> Add New
+            </a>
+        </div>
+        <div class="card-body">
+            <table class="table table-hover align-middle text-center">
+                <thead class="table-light">
                     <tr>
-                        <td class="align-middle">
-                            <img class="rounded-circle" src="@actor.ProfilePictureURL" alt="@actor.FullName" style="max-width:150px" />
-                        </td>
-                        <td class="align-middle">
-                            @Html.DisplayFor(model => actor.FullName)
-                        </td>
-                        <td class="align-middle">
-                            @Html.DisplayFor(model => actor.Bio)
-                        </td>
-                        <td class="align-middle">
-                            @* <a class="btn btn-outline-primary"><i class="bi bi-pencil-square"></i>Edit</a> *@
-                            @* <a class="btn btn-outline-info"><i class="bi bi-eye"></i>Details</a> *@
-                            @* <a class="btn btn-danger"><i class="bi bi-trash"></i>Delete</a> *@
-                            <a asp-action="Edit" asp-controller="Actors" asp-route-id="@actor.Id" class="btn btn-primary"><i class="bi bi-pencil-square"></i>Edit</a>
-                            <a asp-action="Details" asp-controller="Actors" asp-route-id="@actor.Id" class="btn btn-info"><i class="bi bi-eye"></i>Details</a>
-                            <a asp-action="Delete" asp-controller="Actors" asp-route-id="@actor.Id" class="btn btn-danger"><i class="bi bi-trash"></i>Delete</a>
-                        </td>
+                        <th>@Html.DisplayNameFor(model => model.ProfilePictureURL)</th>
+                        <th>@Html.DisplayNameFor(model => model.FullName)</th>
+                        <th>@Html.DisplayNameFor(model => model.Bio)</th>
+                        <th>Actions</th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach (var actor in Model)
+                    {
+                        <tr class="table-row">
+                            <td>
+                                <img class="rounded-circle shadow-sm" src="@actor.ProfilePictureURL" alt="@actor.FullName"
+                                     style="width:80px; height:80px; object-fit:cover;" />
+                            </td>
+                            <td>@actor.FullName</td>
+                            <td class="text-muted text-truncate" style="max-width: 300px;">@actor.Bio</td>
+                            <td>
+                                <div class="btn-group" role="group">
+                                    <a asp-action="Edit" asp-controller="Actors" asp-route-id="@actor.Id" class="btn btn-outline-primary btn-sm">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+                                    <a asp-action="Details" asp-controller="Actors" asp-route-id="@actor.Id" class="btn btn-outline-info btn-sm">
+                                        <i class="bi bi-eye"></i>
+                                    </a>
+                                    <a asp-action="Delete" asp-controller="Actors" asp-route-id="@actor.Id" class="btn btn-outline-danger btn-sm">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
-@* <div style="position: fixed; right: 25px; bottom:75px;" class="text-white"> *@
-    @* <a class="btn btn-success" asp-controller="Actors" asp-action="Create"><i class="bi bi-plus-circle"></i> Add New</a> *@
-@* </div> *@
 
-@await Html.PartialAsync("_CreateItem", "Actors")
+@* Optional: Floating add button instead of header one *@
+@* 
+<div class="floating-add-btn">
+    <a asp-controller="Actors" asp-action="Create" class="btn btn-success">
+        <i class="bi bi-plus-lg"></i>
+    </a>
+</div>
+*@
