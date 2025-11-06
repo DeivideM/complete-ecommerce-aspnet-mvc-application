@@ -1,0 +1,52 @@
+﻿@inject Microsoft.AspNetCore.Identity.UserManager<eTickets.Models.ApplicationUser> UserManager
+
+<!-- Profile Dropdown -->
+<div class="dropdown">
+    <a class="btn btn-outline-primary dropdown-toggle d-flex align-items-center gap-2 px-3 py-2 rounded-pill"
+       href="#" id="profile-btn" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="bi bi-person-circle fs-5"></i>
+        <span class="fw-semibold">
+            @(User.Identity.IsAuthenticated?  @UserManager.GetUserName(User) : "Profile")
+        </span>
+    </a>
+
+    <ul class="dropdown-menu dropdown-menu-end shadow border-0 rounded-3 mt-2 py-2"
+        aria-labelledby="profile-btn" style="min-width: 220px;">
+        <li>
+            <h6 class="dropdown-header text-muted fw-semibold">
+                <i class="bi bi-person-badge me-2"></i>Account
+            </h6>
+        </li>
+
+        @if (User.Identity.IsAuthenticated)
+        {
+            <li>
+                <a class="dropdown-item d-flex align-items-center gap-2 py-2" asp-controller="Orders" asp-action="Index">
+                    <i class="bi bi-list text-primary"></i> Orders
+                </a>
+            </li>
+            <li><hr class="dropdown-divider my-2"></li>
+            <li>
+                <form asp-controller="Account" asp-action="Logout" method="post" class="dropdown-item p-0 m-0">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="btn btn-link d-flex align-items-center gap-2 py-2 text-danger text-decoration-none w-100">
+                        <i class="bi bi-box-arrow-right"></i> Logout
+                    </button>
+                </form>
+            </li>
+        }
+        else
+        {
+            <li>
+                <a class="dropdown-item d-flex align-items-center gap-2 py-2" asp-controller="Account" asp-action="Login">
+                    <i class="bi bi-box-arrow-in-right text-success"></i> Login
+                </a>
+            </li>
+            <li>
+                <a class="dropdown-item d-flex align-items-center gap-2 py-2" asp-controller="Account" asp-action="Register">
+                    <i class="bi bi-person-plus text-info"></i> Register
+                </a>
+            </li>
+        }
+    </ul>
+</div>

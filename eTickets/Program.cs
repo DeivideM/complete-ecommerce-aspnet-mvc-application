@@ -1,7 +1,10 @@
 using eTickets.Data;
 using eTickets.Data.Cart;
 using eTickets.Data.Services;
+using eTickets.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
@@ -33,7 +36,18 @@ builder.Services.AddScoped<IOrdersService, OrdersService>();
 
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped(sc => ShoppingCart.GetShoppingCart(sc));
+
+// Authentication and Authorization
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
+
+builder.Services.AddMemoryCache();
+
 builder.Services.AddSession();
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+});
 
 // Definir a cultura padrão para "pt-BR"
 //var defaultCulture = new CultureInfo("pt-BR");
@@ -82,6 +96,8 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseSession();
 
+// Authentication & Authorization
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
@@ -90,5 +106,6 @@ app.MapControllerRoute(
 
 //Seed Database
 AppDbInitializer.Seed(app);
+AppDbInitializer.SeedUserAndRolesAsync(app).Wait();
 
 app.Run();

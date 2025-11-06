@@ -1,0 +1,69 @@
+﻿@using eTickets.Data.ViewModels
+@model RegisterVM
+
+@{
+    ViewData["Title"] = "Sign Up for a new account";
+}
+
+<div class="row">
+    <div class="col-md-6 offset-3">
+        <h4 class="mb-4">Sign Up for a new account</h4>
+
+        <!-- Exibir mensagem de erro (TempData) -->
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                @TempData["Error"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+
+        <div class="row">
+            <div class="col-md-8 offset-2">
+                <form asp-action="Register">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <!-- FullName -->
+                    <div class="form-group mb-3">
+                        <label asp-for="FullName" class="control-label"></label>
+                        <input asp-for="FullName" class="form-control" />
+                        <span asp-validation-for="FullName" class="text-danger"></span>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="form-group mb-3">
+                        <label asp-for="Email" class="control-label"></label>
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+
+                    <!-- Password -->
+                    <div class="form-group mb-3">
+                        <label asp-for="Password" class="control-label"></label>
+                        <input asp-for="Password" class="form-control" type="password" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+
+                    <!-- ConfirmPassword -->
+                    <div class="form-group mb-3">
+                        <label asp-for="ConfirmPassword" class="control-label"></label>
+                        <input asp-for="ConfirmPassword" class="form-control" type="password" />
+                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                    </div>
+
+                    @* <!-- Remember Me -->
+                    <div class="form-check mb-4">
+                        <input asp-for="RememberMe" class="form-check-input" type="checkbox" />
+                        <label asp-for="RememberMe" class="form-check-label"></label>
+                    </div> *@
+
+                    <!-- Buttons -->
+                    <div class="d-flex justify-content-between">
+                        <a class="btn btn-outline-secondary" asp-controller="Movies" asp-action="Index">Cancel</a>
+                        <input type="submit" value="Sign up" class="btn btn-outline-success" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
